@@ -1,3 +1,3 @@
 # LASTPAGE-SYLLABUS-PARSER
-### Contains notebooks and configs to train and run inference on Annnna University syllabus PDFs.
+### Contains notebooks and configs to train and run inference on Anna University syllabus PDFs.
 ---
