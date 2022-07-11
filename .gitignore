@@ -1,2 +1,5 @@
 venv/
 outputs/
+outputs*/
+test*
+test*/
