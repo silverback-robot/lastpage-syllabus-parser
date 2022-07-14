@@ -3,3 +3,5 @@ outputs/
 outputs*/
 test*
 test*/
+data/pdf
+data/csv
