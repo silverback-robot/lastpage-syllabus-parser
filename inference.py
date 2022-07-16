@@ -1,3 +1,4 @@
+import csv
 import os
 from pathlib import Path
 import requests
@@ -162,6 +163,9 @@ def post_processing(page_contents: dict, categories_map: dict) -> pd.DataFrame:
 
     df = df.merge(categories_map, on="category_id", how="left")
 
+    # Drop columns with name and data as NaN
+    df = df.dropna(subset=["name", "data"], how="all")
+
     log.info("Post-processing completed.")
     return df
 
@@ -169,8 +173,18 @@ def post_processing(page_contents: dict, categories_map: dict) -> pd.DataFrame:
 def export_data(df: pd.DataFrame, csv_file_name: str):
     app_dir = Path.cwd()
     csv_dir = app_dir.joinpath("data").joinpath("csv").as_posix()
-    df[["page_index", "category_id", "name", "data"]].to_csv(
-        f"{csv_dir}/{csv_file_name}.csv"
+    # df[["page_index", "category_id", "name", "data"]].to_csv(
+    #     f"{csv_dir}/{csv_file_name}.csv", index=False
+    # )
+    # Customizing for YAML conversion
+    # df["data"] = '"' + df["data"] + '"'
+    df[["name", "data"]].to_csv(
+        f"{csv_dir}/{csv_file_name}.csv",
+        index=False,
+        sep=":",
+        quotechar='"',
+        header=None,
+        quoting=csv.QUOTE_NONNUMERIC,
     )
 
 
